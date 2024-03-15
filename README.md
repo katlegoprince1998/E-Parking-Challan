@@ -140,3 +140,70 @@ Security (S): Security requirements ensure that the system enforces proper authe
 1. The flow of data originates from external entities (traffic police officers, car owners) and flows into the system.
 2. The system processes this data, interacts with external services (SMS service provider, e-payment gateway), and stores relevant information in the central database.
 3. Responses and notifications are then sent back to the external entities, completing the flow of data.
+
+========================================================================================================================================================================================================================================================================================================================================================================================================================================================
+# Entities and CRUD Operations:
+## Parking Violation:
+
+Create: Traffic police report parking violations.
+Read: Users view violation details.
+Update: Not applicable.
+Delete: Not applicable.
+## Violation History:
+
+Create: Automatically created upon reporting a violation.
+Read: Users access violation history.
+Update: Not applicable.
+Delete: Not applicable.
+## Challan Payment:
+
+Create: Car owners make e-payments for fines.
+Read: Users view payment details.
+Update: Not applicable.
+Delete: Not applicable.
+
+  +-------------------------+
+  |   e-Parking Challan     |
+  +-------------------------+
+         |       |
+         |       |
++--------v-------v--------+
+|      Use Cases         |
++-------------------------+
+|                         |
+|  1. Report Violation    |
+|  2. View Violation      |
+|  3. Make Payment        |
+|  4. View Payment        |
+|  5. View Violation History |
+|                         |
++-----------+-------------+
+            |
+            | Include
+            |
++-----------v-------------+
+|      Included Use Cases |
++-------------------------+
+|                         |
+|   a. Send SMS           |
+|   b. Add to Tax Records |
+|                         |
++-------------------------+
+========================================================================================================================================================================================================================
+
+# Sequence Diagram for Reporting Parking Violations:
+
+## Description:
+1. Traffic Police initiates violation report: Traffic police officer interacts with the system to report a parking violation.
+2. Capture Picture and Enter Details: The system prompts the traffic police officer to capture a picture of the parked car and enter license plate information.
+3. Submit Violation Report: After entering the details, the traffic police officer submits the violation report to the system.
+4. Store in Database: The system securely stores the submitted violation report in the central database.
+## Sequence Diagram for Making Payments for Fines:
+
+## Description:
+1. Car Owner initiates payment: Car owner interacts with the system to make a payment for a fine.
+2. Select Payment Method: The system presents payment options to the car owner, including e-payment and adding the fine to the annual tax records.
+3. Enter Payment Details: Car owner enters payment details such as card information for e-payment.
+4. Process Payment: The system processes the payment using the selected payment method.
+5. Update Payment Status: Upon successful payment processing, the system updates the payment status for the fine in the database.
+
