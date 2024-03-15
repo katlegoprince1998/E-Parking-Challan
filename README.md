@@ -162,33 +162,6 @@ Read: Users view payment details.
 Update: Not applicable.
 Delete: Not applicable.
 
-  +-------------------------+
-  |   e-Parking Challan     |
-  +-------------------------+
-         |       |
-         |       |
-+--------v-------v--------+
-|      Use Cases         |
-+-------------------------+
-|                         |
-|  1. Report Violation    |
-|  2. View Violation      |
-|  3. Make Payment        |
-|  4. View Payment        |
-|  5. View Violation History |
-|                         |
-+-----------+-------------+
-            |
-            | Include
-            |
-+-----------v-------------+
-|      Included Use Cases |
-+-------------------------+
-|                         |
-|   a. Send SMS           |
-|   b. Add to Tax Records |
-|                         |
-+-------------------------+
 ========================================================================================================================================================================================================================
 
 # Sequence Diagram for Reporting Parking Violations:
