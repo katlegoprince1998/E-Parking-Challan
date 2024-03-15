@@ -105,3 +105,38 @@ Usability (U): While not explicitly mentioned, usability considerations could in
 Reliability (R): The system's reliability is ensured through features like secure data storage, backup mechanisms, and high availability to prevent downtime.
 Performance (P): Performance requirements ensure that the system can handle a large volume of data and user requests efficiently, supporting scalability for future growth.
 Security (S): Security requirements ensure that the system enforces proper authentication and authorization mechanisms and handles personal information securely to comply with privacy regulations.
+
+=========================================================================================================================================================================================================================================================================================================================================================================================================================================================
+# Description:
+## Traffic Police Officer:
+
+1. External entity representing the traffic police officers who interact with the system.
+2. They report parking violations by capturing pictures and entering license plate information.
+3. Data Flow: The traffic police officer submits violation reports to the system.
+## Car Owner:
+
+1. External entity representing the owners of the parked cars.
+2. They receive automated SMS notifications about parking violations and fines.
+3. Data Flow: Car owners receive SMS notifications from the system.
+## SMS Service Provider:
+
+1. External service provider responsible for sending SMS notifications.
+2. Integrated with the system to deliver automated notifications to car owners.
+3. Data Flow: The system sends notification requests to the SMS service provider.
+## Central Database:
+
+1. Represents the central database where all violation reports and related data are stored.
+2. Data Flow: Violation reports submitted by traffic police officers are securely stored in the central database.
+## E-Payment Gateway:
+
+1. External service provider facilitating online payment of fines.
+2. Integrated with the system to process fine payments from car owners.
+3. Data Flow: Car owners make e-payments through the system, which interacts with the e-payment gateway.
+## Annual Tax Records:
+
+1. Represents the records of annual taxes associated with vehicles.
+2. Data Flow: Unpaid fines can be added to the annual tax records of vehicles through the system.
+# Direction of Flow:
+1. The flow of data originates from external entities (traffic police officers, car owners) and flows into the system.
+2. The system processes this data, interacts with external services (SMS service provider, e-payment gateway), and stores relevant information in the central database.
+3. Responses and notifications are then sent back to the external entities, completing the flow of data.
