@@ -12,7 +12,8 @@
 	<artifactId>e-parking-challan</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>e-parking-challan</name>
-	<description>e-Parking Challan System: A Spring Boot REST API for automating parking violation reporting and payment processing. Enables traffic police to report violations with photos, provides car owners with violation history, and allows for convenient e-payment options. Developed to streamline enforcement and improve compliance with parking regulations.</description>
+	<description>e-Parking Challan System: A Spring Boot REST API for automating parking violation reporting
+		and payment processing. Enables traffic police to report violations with photos, provides car owners with violation history, and allows for convenient e-payment options. Developed to streamline enforcement and improve compliance with parking regulations.</description>
 	<properties>
 		<java.version>17</java.version>
 	</properties>
@@ -32,6 +33,21 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt-jackson</artifactId>
+			<version>0.11.5</version>
+		</dependency>
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt-impl</artifactId>
+			<version>0.11.5</version>
+		</dependency>
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt-api</artifactId>
+			<version>0.11.5</version>
 		</dependency>
 
 		<dependency>
