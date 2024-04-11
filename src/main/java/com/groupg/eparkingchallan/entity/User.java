@@ -1,11 +1,14 @@
 package com.groupg.eparkingchallan.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Entity
@@ -24,5 +27,8 @@ public class User {
     private String cellNo;
     private String idNo;
     private String password;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    private List<Report> reports = new ArrayList<>();
 
 }

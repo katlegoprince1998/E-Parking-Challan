@@ -11,5 +11,6 @@ import java.util.List;
 @Repository
 public interface CarRepository extends JpaRepository<Car, Integer> {
     List<Car> findByDriver(Driver driver);
+    Car findByNumberPlate(String numberPlate);
 
 }
