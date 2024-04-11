@@ -1,5 +1,6 @@
 package com.groupg.eparkingchallan.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -14,14 +15,14 @@ import lombok.NoArgsConstructor;
 public class Car {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private Integer id;
     private String name;
     private String color;
     private String numberPlate;
     private String model;
-
-    @ManyToOne
-
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="driver_id")
+    @JsonIgnoreProperties("cars")
     private Driver driver;
 
 }

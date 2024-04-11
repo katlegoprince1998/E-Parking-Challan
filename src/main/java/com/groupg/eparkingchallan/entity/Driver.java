@@ -1,5 +1,7 @@
 package com.groupg.eparkingchallan.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -23,7 +25,8 @@ public class Driver {
     private String email;
     private String phone;
     private String address;
-    private String registrationNumber;
-    @OneToMany(mappedBy = "driver", cascade = CascadeType.ALL)
+    private String licenseNumber;
+    @OneToMany(mappedBy = "driver", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     private List<Car> cars = new ArrayList<>();
 }
