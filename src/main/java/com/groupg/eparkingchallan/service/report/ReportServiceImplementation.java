@@ -18,10 +18,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
-
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.List;
 
 @Service
@@ -32,6 +29,7 @@ public class ReportServiceImplementation implements ReportService {
     private final UserRepository userRepository;
     private final CarRepository carRepository;
     private final DriverRepository driverRepository;
+
     @Override
     public ReportDto createReport(ReportDto reportDto) throws CarNotFoundException, DriverNotFoundException {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -63,6 +61,7 @@ public class ReportServiceImplementation implements ReportService {
         report.setCar(car);
 
         report = reportRepository.save(report);
+
 
         return ReportDto.builder()
                 .dayAndTime(report.getDayAndTime())
