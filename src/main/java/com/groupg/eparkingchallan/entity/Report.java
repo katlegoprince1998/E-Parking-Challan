@@ -21,6 +21,8 @@ public class Report {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String image;
+    private double amount;
+    private String description;
     private String numberPlate;
     private LocalDateTime dayAndTime;
     @ManyToOne(fetch = FetchType.LAZY)

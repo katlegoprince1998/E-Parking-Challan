@@ -12,5 +12,5 @@ spring:
     show_sql: true
     hibernate:
       ddl-auto: update
-  server:
-    port: 8085
+
+

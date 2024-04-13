@@ -15,6 +15,8 @@ import java.time.LocalDateTime;
 public class ReportDto {
     private Long id;
     private String image;
+    private double amount;
+    private String description;
     private String numberPlate;
     private LocalDateTime dayAndTime;
     private Car car;
