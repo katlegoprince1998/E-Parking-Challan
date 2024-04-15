@@ -1,5 +1,6 @@
 package com.groupg.eparkingchallan.service.report;
 
+import com.groupg.eparkingchallan.config.twilio.SmsPojo;
 import com.groupg.eparkingchallan.dto.ReportDto;
 import com.groupg.eparkingchallan.entity.Car;
 import com.groupg.eparkingchallan.entity.Driver;
@@ -11,6 +12,7 @@ import com.groupg.eparkingchallan.repository.CarRepository;
 import com.groupg.eparkingchallan.repository.DriverRepository;
 import com.groupg.eparkingchallan.repository.ReportRepository;
 import com.groupg.eparkingchallan.repository.UserRepository;
+import com.groupg.eparkingchallan.service.twilio.SmsService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -21,7 +23,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -31,17 +32,17 @@ public class ReportServiceImplementation implements ReportService {
     private final UserRepository userRepository;
     private final CarRepository carRepository;
     private final DriverRepository driverRepository;
-
+    private final SmsService smsService;
 
     @Autowired
     public ReportServiceImplementation(ReportRepository reportRepository,
                                        UserRepository userRepository, CarRepository carRepository,
-                                       DriverRepository driverRepository) {
+                                       DriverRepository driverRepository, SmsService smsService) {
         this.reportRepository = reportRepository;
         this.userRepository = userRepository;
         this.carRepository = carRepository;
         this.driverRepository = driverRepository;
-
+        this.smsService = smsService;
     }
 
     @Override
@@ -75,8 +76,12 @@ public class ReportServiceImplementation implements ReportService {
         report.setNumberPlate(reportDto.getNumberPlate());
         report.setUser(user);
         report.setCar(car);
-
         report = reportRepository.save(report);
+        SmsPojo smsPojo = new SmsPojo();
+        smsPojo.setMessage(reportDto.getDescription());
+        smsPojo.setSendTo(driver.getPhone());
+        smsService.send(smsPojo);
+
 
         return ReportDto.builder()
                 .dayAndTime(report.getDayAndTime())
