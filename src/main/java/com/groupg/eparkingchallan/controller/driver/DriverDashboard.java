@@ -47,10 +47,17 @@ public class DriverDashboard {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
-
     @GetMapping("get/driver/{id}")
     public ResponseEntity<Object> getDriverById(@PathVariable Long id) throws DriverNotFoundException {
         DriverDto driverDto = driverService.findDriver(id);
         return new ResponseEntity<>(driverDto, HttpStatus.OK);
+    }
+    @GetMapping("/getDriver/{licenseNumber}")
+    public DriverDto getDriverByLicenseNumber(@PathVariable String licenseNumber) throws DriverNotFoundException {
+        DriverDto optionalDriver = driverService.getDriverByLicenseNumber(licenseNumber);
+        if (optionalDriver == null) {
+            throw new DriverNotFoundException("Driver not found with license number: " + licenseNumber);
+        }
+        return optionalDriver;
     }
 }
