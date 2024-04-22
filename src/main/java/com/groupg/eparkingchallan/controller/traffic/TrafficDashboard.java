@@ -11,6 +11,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
+import java.util.List;
+
 @RestController
 @RequestMapping("/dashboard/")
 @RequiredArgsConstructor
@@ -18,14 +21,13 @@ public class TrafficDashboard {
     private final ReportService reportService;
 
     @PostMapping("/report")
-        public ResponseEntity<Object> createReport(
-                @RequestBody ReportDto reportDto
-                ) throws IllegalAccessException, DriverNotFoundException, CarNotFoundException {
+    public ResponseEntity<Object> createReport(
+            @RequestBody ReportDto reportDto
+    ) throws IllegalAccessException, DriverNotFoundException, CarNotFoundException, IOException {
 
-              ReportDto reportDto1 = reportService.createReport(reportDto);
-              return new ResponseEntity<>(reportDto1, HttpStatus.CREATED);
-        }
-
+        ReportDto reportDto1 = reportService.createReport(reportDto);
+        return new ResponseEntity<>(reportDto1, HttpStatus.CREATED);
+    }
     @GetMapping("/report/{id}")
     public ResponseEntity<Object> getReport(@PathVariable Long id){
         try {
@@ -47,5 +49,18 @@ public class TrafficDashboard {
         } else {
             return ResponseEntity.ok(reports);
         }
+    }
+    @GetMapping("/violations")
+    public List<Report> violations(){
+        return reportService.getAllReports();
+    }
+
+    @GetMapping("/search")
+    public List<Report> searchViolations(
+            @RequestParam(required = false) String numberPlate,
+            @RequestParam(required = false) String location,
+            @RequestParam(required = false) String typeOfViolation
+    ) {
+        return reportService.searchViolations(numberPlate, location, typeOfViolation);
     }
 }

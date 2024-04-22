@@ -20,15 +20,12 @@ public class Report {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private String image;
     private double amount;
     private String description;
     private String numberPlate;
+    private String location;
+    private String typeOfViolation;
     private LocalDateTime dayAndTime;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="user_id")
-    @JsonIgnoreProperties("users")
-    private User user;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="car_id")
     @JsonIgnoreProperties("cars")

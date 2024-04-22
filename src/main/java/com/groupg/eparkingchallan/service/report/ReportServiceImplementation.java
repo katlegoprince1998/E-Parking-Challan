@@ -23,6 +23,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -47,19 +48,7 @@ public class ReportServiceImplementation implements ReportService {
 
     @Override
     public ReportDto createReport(ReportDto reportDto) throws CarNotFoundException, DriverNotFoundException {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-        if (authentication == null || !authentication.isAuthenticated() ||
-                !(authentication.getPrincipal() instanceof UserDetails userDetails)) {
-            throw new IllegalStateException("User authentication not available or user not authenticated");
-        }
-        String username = userDetails.getUsername();
-
-        User user = userRepository.findByEmail(username);
-
-        if (user == null) {
-            throw new IllegalStateException("User not found for username: " + username);
-        }
         Car car = carRepository.findByNumberPlate(reportDto.getNumberPlate());
         if (car == null){
             throw new CarNotFoundException("Car was not found");
@@ -70,24 +59,30 @@ public class ReportServiceImplementation implements ReportService {
 
         Report report = new Report();
         report.setDayAndTime(LocalDateTime.now());
-        report.setImage(reportDto.getImage());
         report.setAmount(reportDto.getAmount());
         report.setDescription(reportDto.getDescription());
+        report.setLocation(reportDto.getLocation());
+        report.setTypeOfViolation(reportDto.getTypeOfViolation());
         report.setNumberPlate(reportDto.getNumberPlate());
-        report.setUser(user);
         report.setCar(car);
         report = reportRepository.save(report);
         SmsPojo smsPojo = new SmsPojo();
-        smsPojo.setMessage(reportDto.getDescription());
+        String text = "Good day " + driver.getFirstname() + " " +
+                driver.getLastname() + ", you have been charged  R" + reportDto.getAmount()
+                + " for" + reportDto.getTypeOfViolation() + ". Please visit http://localhost:300 to pay or add your ticket " +
+                "to your annual tax"
+                ;
+        smsPojo.setMessage(text);
         smsPojo.setSendTo(driver.getPhone());
         smsService.send(smsPojo);
 
 
         return ReportDto.builder()
                 .dayAndTime(report.getDayAndTime())
-                .image(report.getImage())
                 .amount(report.getAmount())
                 .description(report.getDescription())
+                .location(report.getLocation())
+                .typeOfViolation(report.getTypeOfViolation())
                 .id(report.getId())
                 .numberPlate(report.getNumberPlate())
                 .car(report.getCar())
@@ -117,5 +112,14 @@ public class ReportServiceImplementation implements ReportService {
                 PageRequest.of(offset, pageSize).withSort(Sort.by(field))
         );
     }
-}
 
+    @Override
+    public List<Report> getAllReports() {
+        return reportRepository.findAll();
+    }
+
+    public List<Report> searchViolations(String numberPlate, String location, String typeOfViolation) {
+        // Implement search logic using repository
+        return reportRepository.findAllByNumberPlateAndLocationAndTypeOfViolation(numberPlate, location, typeOfViolation);
+    }
+}

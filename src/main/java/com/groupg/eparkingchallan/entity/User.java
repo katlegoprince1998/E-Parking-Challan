@@ -27,8 +27,5 @@ public class User {
     private String cellNo;
     private String idNo;
     private String password;
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonIgnore
-    private List<Report> reports = new ArrayList<>();
 
 }

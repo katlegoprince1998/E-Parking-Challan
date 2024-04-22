@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.web.multipart.MultipartFile;
+
 import java.time.LocalDateTime;
 
 
@@ -14,10 +16,11 @@ import java.time.LocalDateTime;
 @Builder
 public class ReportDto {
     private Long id;
-    private String image;
     private double amount;
     private String description;
     private String numberPlate;
+    private String location;
+    private String typeOfViolation;
     private LocalDateTime dayAndTime;
     private Car car;
 }
