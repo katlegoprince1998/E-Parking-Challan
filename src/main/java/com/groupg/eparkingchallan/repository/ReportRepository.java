@@ -11,4 +11,6 @@ public interface ReportRepository extends JpaRepository<Report, Long> {
     List<Report> findAllByNumberPlateAndLocationAndTypeOfViolation(
             String numberPlate, String location, String typeOfViolation
     );
+
+    List<Report> findAllByCar_Driver_LicenseNumber(String licenseNumber);
 }

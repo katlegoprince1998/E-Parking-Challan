@@ -1,6 +1,7 @@
 package com.groupg.eparkingchallan.service.report;
 
 import com.groupg.eparkingchallan.config.twilio.SmsPojo;
+import com.groupg.eparkingchallan.dto.DriverDto;
 import com.groupg.eparkingchallan.dto.ReportDto;
 import com.groupg.eparkingchallan.entity.Car;
 import com.groupg.eparkingchallan.entity.Driver;
@@ -121,5 +122,10 @@ public class ReportServiceImplementation implements ReportService {
     public List<Report> searchViolations(String numberPlate, String location, String typeOfViolation) {
         // Implement search logic using repository
         return reportRepository.findAllByNumberPlateAndLocationAndTypeOfViolation(numberPlate, location, typeOfViolation);
+    }
+
+    @Override
+    public List<Report> getReportsByDriverLicenseNumber(String licenseNumber) {
+        return reportRepository.findAllByCar_Driver_LicenseNumber(licenseNumber);
     }
 }

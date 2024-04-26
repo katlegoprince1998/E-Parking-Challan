@@ -10,6 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/dashboard")
@@ -54,10 +56,6 @@ public class DriverDashboard {
     }
     @GetMapping("/getDriver/{licenseNumber}")
     public DriverDto getDriverByLicenseNumber(@PathVariable String licenseNumber) throws DriverNotFoundException {
-        DriverDto optionalDriver = driverService.getDriverByLicenseNumber(licenseNumber);
-        if (optionalDriver == null) {
-            throw new DriverNotFoundException("Driver not found with license number: " + licenseNumber);
-        }
-        return optionalDriver;
+        return driverService.getDriverByLicenseNumber(licenseNumber);
     }
 }

@@ -1,9 +1,11 @@
 package com.groupg.eparkingchallan.controller.traffic;
 
 import com.groupg.eparkingchallan.dto.ReportDto;
+import com.groupg.eparkingchallan.entity.Driver;
 import com.groupg.eparkingchallan.entity.Report;
 import com.groupg.eparkingchallan.exception.CarNotFoundException;
 import com.groupg.eparkingchallan.exception.DriverNotFoundException;
+import com.groupg.eparkingchallan.service.driver.DriverService;
 import com.groupg.eparkingchallan.service.report.ReportService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -19,14 +21,18 @@ import java.util.List;
 @RequiredArgsConstructor
 public class TrafficDashboard {
     private final ReportService reportService;
+    private final DriverService driverService;
 
     @PostMapping("/report")
-    public ResponseEntity<Object> createReport(
-            @RequestBody ReportDto reportDto
-    ) throws IllegalAccessException, DriverNotFoundException, CarNotFoundException, IOException {
-
-        ReportDto reportDto1 = reportService.createReport(reportDto);
-        return new ResponseEntity<>(reportDto1, HttpStatus.CREATED);
+    public ResponseEntity<Object> createReport(@RequestBody ReportDto reportDto) {
+        try {
+            ReportDto createdReport = reportService.createReport(reportDto);
+            return new ResponseEntity<>(createdReport, HttpStatus.CREATED);
+        } catch (CarNotFoundException | DriverNotFoundException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
     @GetMapping("/report/{id}")
     public ResponseEntity<Object> getReport(@PathVariable Long id){
@@ -62,5 +68,14 @@ public class TrafficDashboard {
             @RequestParam(required = false) String typeOfViolation
     ) {
         return reportService.searchViolations(numberPlate, location, typeOfViolation);
+    }
+
+    @GetMapping("/reports/{licenseNumber}")
+    public ResponseEntity<List<Report>> getReportsByDriverLicenseNumber(@PathVariable String licenseNumber) {
+        List<Report> reports = reportService.getReportsByDriverLicenseNumber(licenseNumber);
+        if (reports.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(reports, HttpStatus.OK);
     }
 }

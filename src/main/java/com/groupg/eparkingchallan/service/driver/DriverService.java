@@ -4,6 +4,8 @@ import com.groupg.eparkingchallan.dto.DriverDto;
 import com.groupg.eparkingchallan.exception.DriverNotFoundException;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+
 public interface DriverService {
     DriverDto createDriver(DriverDto driverDto);
     DriverDto findDriver(Long id) throws DriverNotFoundException;

@@ -50,7 +50,7 @@ public class DriverServiceImplementation implements DriverService{
 
     @Override
     public DriverDto getDriverByLicenseNumber(String licenseNumber) throws DriverNotFoundException {
-        DriverDto optionalDriver = driverRepository.findByLicenseNumber(licenseNumber);
+        Driver optionalDriver = driverRepository.findByLicenseNumber(licenseNumber);
         if (optionalDriver == null){
             throw  new DriverNotFoundException("Driver was not found");
         }
